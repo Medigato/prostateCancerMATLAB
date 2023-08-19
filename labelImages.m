@@ -4,6 +4,11 @@
 
 function labelImages(filteredCollection,selectedTPM)
 
+%% Creates Directories
+if exist('LabeledImgs/cancerImgs','dir') == 0 & exist('LabeledImgs/nocancerImgs','dir') == 0
+    mkdir('LabeledImgs/cancerImgs')
+    mkdir('LabeledImgs/nocancerImgs')
+end
 
 % At the moment you currently have 2 tables
 % 1. filteredCollection which is the collection of t2 images available
@@ -25,7 +30,7 @@ for k = 1 : height(filteredCollection)
     end
 
 end
-save('t2_collection.mat',"filteredCollection" );
+save('filteredcollection.mat',"filteredCollection" );
 
 % Loop over table and save images to different folders
 % Are you sure you want to generate another set of images?
@@ -47,7 +52,7 @@ for k = 1 : height(filteredCollection)
                 randid = randi([0000 9999],1);
                 randid = string(randid);
                 filename = strcat('cancer',filteredCollection{k,'PatientName'},'-',string(l),'-',randid,'.png');
-                filename = fullfile('cancerImages',filename);
+                filename = fullfile('LabeledImgs','cancerImgs',filename);
                 imwrite(I,filename);
                     % May want to save all the dicom metadata on a file? 
                     % info = dicominfo(filepathname);
@@ -69,7 +74,7 @@ for k = 1 : height(filteredCollection)
                 randid = randi([0000 9999],1);
                 randid = string(randid);
                 filename = strcat('Nocancer',filteredCollection{k,'PatientName'},'-',string(l),'-',randid,'.png');
-                filename = fullfile('nocancerImages',filename);
+                filename = fullfile('LabeledImgs','nocancerImgs',filename);
                 imwrite(I,filename);
                     % May want to save all the dicom metadata on a file? 
                     % info = dicominfo(filepathname);

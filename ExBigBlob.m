@@ -1,4 +1,3 @@
-
 function binaryImage = ExtBigBlobM(grayImage)
 % clc;    % Clear the command window.
 % close all;  % Close all figures (except those of imtool.)
