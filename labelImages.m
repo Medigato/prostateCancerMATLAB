@@ -1,4 +1,5 @@
 
+% This also needs a clean up. 
 % Be careful of running this file because it creates a lot of images 
 % Needs Filtered Collection and SelectedTPM 
 
@@ -31,7 +32,8 @@ for k = 1 : height(filteredCollection)
 
 end
 save('filteredcollection.mat',"filteredCollection" );
-
+% Set image Size for saving 
+    imageSize = [256 256];
 % Loop over table and save images to different folders
 % Are you sure you want to generate another set of images?
 for k = 1 : height(filteredCollection)
@@ -41,7 +43,7 @@ for k = 1 : height(filteredCollection)
                 filepathname = filteredCollection.Filenames{k}{l};
                 % fprintf('Reading %s \n ',filepathname)
                 imguint16 = dicomread(filepathname);
-                imguint16 = imresize(imguint16,[256 256]);
+                imguint16 = imresize(imguint16,imagesize);
                     % 
                     % %% For some reason, dicomread read the dicom images wrong and sets a uint8 array into a uint16 array
                     % %% this code fixes that
@@ -49,6 +51,11 @@ for k = 1 : height(filteredCollection)
                    
                 c = char(imguint16);
                 I = uint8(c);
+
+                % Insert Preprocessing function
+
+
+                % Generates a random ID and saves images
                 randid = randi([0000 9999],1);
                 randid = string(randid);
                 filename = strcat('cancer',filteredCollection{k,'PatientName'},'-',string(l),'-',randid,'.png');
@@ -63,7 +70,7 @@ for k = 1 : height(filteredCollection)
                 filepathname = filteredCollection.Filenames{k}{l};
                 % fprintf('Reading %s \n ',filepathname)
                 imguint16 = dicomread(filepathname);
-                imguint16 = imresize(imguint16,[256 256]);
+                imguint16 = imresize(imguint16,imageSize);
                     % 
                     % %% For some reason, dicomread read the dicom images wrong and sets a uint8 array into a uint16 array
                     % %% this code fixes that
@@ -71,6 +78,10 @@ for k = 1 : height(filteredCollection)
                    
                 c = char(imguint16);
                 I = uint8(c);
+        % Inser Preproessing Function
+
+
+                % Generates a random ID and saves images
                 randid = randi([0000 9999],1);
                 randid = string(randid);
                 filename = strcat('Nocancer',filteredCollection{k,'PatientName'},'-',string(l),'-',randid,'.png');
